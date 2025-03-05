@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Legal Chatbot</title>
+</head>
+<body>
+    <h1>Legal Chatbot</h1>
+    <form action="/query" method="post">
+        <label for="query">Enter your legal query:</label><br>
+        <textarea id="query" name="query" rows="4" cols="50"></textarea><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <div id="response">
+        <h2>Response:</h2>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        // JavaScript to handle form submission and display results
+        document.querySelector('form').addEventListener('submit', async (event) => {
+            event.preventDefault();  // Prevent default form submission
+            const formData = new FormData(event.target);
+            const response = await fetch('/query', {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await response.json();
+            document.getElementById('result').textContent = data.result;
+        });
+    </script>
+</body>
+</html>
